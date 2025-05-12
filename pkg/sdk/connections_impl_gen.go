@@ -73,35 +73,29 @@ func (r *AlterConnectionRequest) toOpts() *AlterConnectionOptions {
 		name:     r.name,
 		Primary:  r.Primary,
 	}
-
 	if r.EnableConnectionFailover != nil {
 		opts.EnableConnectionFailover = &EnableConnectionFailover{
 			ToAccounts: r.EnableConnectionFailover.ToAccounts,
 		}
 	}
-
 	if r.DisableConnectionFailover != nil {
 		opts.DisableConnectionFailover = &DisableConnectionFailover{}
-
 		if r.DisableConnectionFailover.ToAccounts != nil {
 			opts.DisableConnectionFailover.ToAccounts = &ToAccounts{
 				Accounts: r.DisableConnectionFailover.ToAccounts.Accounts,
 			}
 		}
 	}
-
 	if r.Set != nil {
 		opts.Set = &ConnectionSet{
 			Comment: r.Set.Comment,
 		}
 	}
-
 	if r.Unset != nil {
 		opts.Unset = &ConnectionUnset{
 			Comment: r.Unset.Comment,
 		}
 	}
-
 	return opts
 }
 

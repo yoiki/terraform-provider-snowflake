@@ -53,9 +53,9 @@ func (v *externalVolumes) Show(ctx context.Context, request *ShowExternalVolumeR
 }
 
 func (v *externalVolumes) ShowByID(ctx context.Context, id AccountObjectIdentifier) (*ExternalVolume, error) {
-	externalVolumes, err := v.Show(ctx, NewShowExternalVolumeRequest().WithLike(Like{
-		Pattern: String(id.Name()),
-	}))
+	request := NewShowExternalVolumeRequest().
+		WithLike(Like{Pattern: String(id.Name())})
+	externalVolumes, err := v.Show(ctx, request)
 	if err != nil {
 		return nil, err
 	}
@@ -84,14 +84,12 @@ func (r *AlterExternalVolumeRequest) toOpts() *AlterExternalVolumeOptions {
 		name:                  r.name,
 		RemoveStorageLocation: r.RemoveStorageLocation,
 	}
-
 	if r.Set != nil {
 		opts.Set = &AlterExternalVolumeSet{
 			AllowWrites: r.Set.AllowWrites,
 			Comment:     r.Set.Comment,
 		}
 	}
-
 	if r.AddStorageLocation != nil {
 		opts.AddStorageLocation = &ExternalVolumeStorageLocation{}
 		if r.AddStorageLocation.S3StorageLocationParams != nil {
@@ -109,7 +107,6 @@ func (r *AlterExternalVolumeRequest) toOpts() *AlterExternalVolumeOptions {
 				}
 			}
 		}
-
 		if r.AddStorageLocation.GCSStorageLocationParams != nil {
 			opts.AddStorageLocation.GCSStorageLocationParams = &GCSStorageLocationParams{
 				Name:           r.AddStorageLocation.GCSStorageLocationParams.Name,
@@ -122,7 +119,6 @@ func (r *AlterExternalVolumeRequest) toOpts() *AlterExternalVolumeOptions {
 				}
 			}
 		}
-
 		if r.AddStorageLocation.AzureStorageLocationParams != nil {
 			opts.AddStorageLocation.AzureStorageLocationParams = &AzureStorageLocationParams{
 				Name:           r.AddStorageLocation.AzureStorageLocationParams.Name,
@@ -131,7 +127,6 @@ func (r *AlterExternalVolumeRequest) toOpts() *AlterExternalVolumeOptions {
 			}
 		}
 	}
-
 	return opts
 }
 

@@ -48,7 +48,6 @@ func (v *networkPolicies) ShowByID(ctx context.Context, id AccountObjectIdentifi
 	if err != nil {
 		return nil, err
 	}
-
 	return collections.FindFirst(networkPolicies, func(r NetworkPolicy) bool { return r.Name == id.Name() })
 }
 
@@ -73,20 +72,23 @@ func (r *CreateNetworkPolicyRequest) toOpts() *CreateNetworkPolicyOptions {
 		name:                   r.name,
 		AllowedNetworkRuleList: r.AllowedNetworkRuleList,
 		BlockedNetworkRuleList: r.BlockedNetworkRuleList,
-
-		Comment: r.Comment,
+		Comment:                r.Comment,
 	}
 	if r.AllowedIpList != nil {
 		s := make([]IP, len(r.AllowedIpList))
 		for i, v := range r.AllowedIpList {
-			s[i] = IP(v)
+			s[i] = IP{
+				IP: v.IP,
+			}
 		}
 		opts.AllowedIpList = s
 	}
 	if r.BlockedIpList != nil {
 		s := make([]IP, len(r.BlockedIpList))
 		for i, v := range r.BlockedIpList {
-			s[i] = IP(v)
+			s[i] = IP{
+				IP: v.IP,
+			}
 		}
 		opts.BlockedIpList = s
 	}
@@ -97,7 +99,6 @@ func (r *AlterNetworkPolicyRequest) toOpts() *AlterNetworkPolicyOptions {
 	opts := &AlterNetworkPolicyOptions{
 		IfExists: r.IfExists,
 		name:     r.name,
-
 		RenameTo: r.RenameTo,
 	}
 	if r.Set != nil {
@@ -119,7 +120,9 @@ func (r *AlterNetworkPolicyRequest) toOpts() *AlterNetworkPolicyOptions {
 			if r.Set.AllowedIpList.AllowedIPList != nil {
 				s := make([]IP, len(r.Set.AllowedIpList.AllowedIPList))
 				for i, v := range r.Set.AllowedIpList.AllowedIPList {
-					s[i] = IP(v)
+					s[i] = IP{
+						IP: v.IP,
+					}
 				}
 				opts.Set.AllowedIpList.AllowedIPList = s
 			}
@@ -129,7 +132,9 @@ func (r *AlterNetworkPolicyRequest) toOpts() *AlterNetworkPolicyOptions {
 			if r.Set.BlockedIpList.BlockedIPList != nil {
 				s := make([]IP, len(r.Set.BlockedIpList.BlockedIPList))
 				for i, v := range r.Set.BlockedIpList.BlockedIPList {
-					s[i] = IP(v)
+					s[i] = IP{
+						IP: v.IP,
+					}
 				}
 				opts.Set.BlockedIpList.BlockedIPList = s
 			}

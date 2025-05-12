@@ -1,10 +1,13 @@
 {{- /*gotype: github.com/Snowflake-Labs/terraform-provider-snowflake/pkg/sdk/poc/generator.Field*/ -}}
 
-{{ .KindNoPtr }}{
+{{ .KindNoPtr }}{ {{- "" -}}
 {{- range .Fields }}
-    {{- if .ShouldBeInDto }}
-        {{ if .IsStruct }}{{ else }}{{ .Name }}: r{{ .Path }},{{ end -}}
-    {{- end -}}
+    {{- if .ShouldBeInDto -}}
+        {{- if .IsStruct -}}
+        {{- else }}
+            {{ .Name }}: r{{ .Path }},
+        {{- end }}
+    {{- end }}
 {{- end }}
 }
 {{- range .Fields }}

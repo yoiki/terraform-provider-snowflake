@@ -79,10 +79,9 @@ func (r *CreateSessionPolicyRequest) toOpts() *CreateSessionPolicyOptions {
 
 func (r *AlterSessionPolicyRequest) toOpts() *AlterSessionPolicyOptions {
 	opts := &AlterSessionPolicyOptions{
-		IfExists: r.IfExists,
-		name:     r.name,
-		RenameTo: r.RenameTo,
-
+		IfExists:  r.IfExists,
+		name:      r.name,
+		RenameTo:  r.RenameTo,
 		SetTags:   r.SetTags,
 		UnsetTags: r.UnsetTags,
 	}

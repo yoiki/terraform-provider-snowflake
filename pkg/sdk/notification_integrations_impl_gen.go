@@ -72,8 +72,7 @@ func (r *CreateNotificationIntegrationRequest) toOpts() *CreateNotificationInteg
 		IfNotExists: r.IfNotExists,
 		name:        r.name,
 		Enabled:     r.Enabled,
-
-		Comment: r.Comment,
+		Comment:     r.Comment,
 	}
 	if r.AutomatedDataLoadsParams != nil {
 		opts.AutomatedDataLoadsParams = &AutomatedDataLoadsParams{}
@@ -119,16 +118,14 @@ func (r *CreateNotificationIntegrationRequest) toOpts() *CreateNotificationInteg
 
 func (r *AlterNotificationIntegrationRequest) toOpts() *AlterNotificationIntegrationOptions {
 	opts := &AlterNotificationIntegrationOptions{
-		IfExists: r.IfExists,
-		name:     r.name,
-
+		IfExists:  r.IfExists,
+		name:      r.name,
 		SetTags:   r.SetTags,
 		UnsetTags: r.UnsetTags,
 	}
 	if r.Set != nil {
 		opts.Set = &NotificationIntegrationSet{
 			Enabled: r.Set.Enabled,
-
 			Comment: r.Set.Comment,
 		}
 		if r.Set.SetPushParams != nil {

@@ -35,8 +35,8 @@ func (v *cortexSearchServices) Show(ctx context.Context, request *ShowCortexSear
 
 func (v *cortexSearchServices) ShowByID(ctx context.Context, id SchemaObjectIdentifier) (*CortexSearchService, error) {
 	request := NewShowCortexSearchServiceRequest().
-		WithLike(Like{Pattern: String(id.Name())}).
-		WithIn(In{Schema: id.SchemaId()})
+		WithIn(In{Schema: id.SchemaId()}).
+		WithLike(Like{Pattern: String(id.Name())})
 	cortexSearchServices, err := v.Show(ctx, request)
 	if err != nil {
 		return nil, err
@@ -70,23 +70,20 @@ func (v *cortexSearchServices) DropSafely(ctx context.Context, id SchemaObjectId
 
 func (r *CreateCortexSearchServiceRequest) toOpts() *CreateCortexSearchServiceOptions {
 	opts := &CreateCortexSearchServiceOptions{
-		OrReplace:   r.OrReplace,
-		IfNotExists: r.IfNotExists,
-		name:        r.name,
-		On:          r.On,
-
+		OrReplace:       r.OrReplace,
+		IfNotExists:     r.IfNotExists,
+		name:            r.name,
+		On:              r.On,
 		Warehouse:       r.Warehouse,
 		TargetLag:       r.TargetLag,
 		Comment:         r.Comment,
 		QueryDefinition: r.QueryDefinition,
 	}
-
 	if r.Attributes != nil {
 		opts.Attributes = &Attributes{
 			Columns: r.Attributes.Columns,
 		}
 	}
-
 	return opts
 }
 
@@ -95,7 +92,6 @@ func (r *AlterCortexSearchServiceRequest) toOpts() *AlterCortexSearchServiceOpti
 		IfExists: r.IfExists,
 		name:     r.name,
 	}
-
 	if r.Set != nil {
 		opts.Set = &CortexSearchServiceSet{
 			TargetLag: r.Set.TargetLag,
@@ -103,7 +99,6 @@ func (r *AlterCortexSearchServiceRequest) toOpts() *AlterCortexSearchServiceOpti
 			Comment:   r.Set.Comment,
 		}
 	}
-
 	return opts
 }
 

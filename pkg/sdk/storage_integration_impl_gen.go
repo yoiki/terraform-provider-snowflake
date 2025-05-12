@@ -68,10 +68,9 @@ func (v *storageIntegrations) Describe(ctx context.Context, id AccountObjectIden
 
 func (r *CreateStorageIntegrationRequest) toOpts() *CreateStorageIntegrationOptions {
 	opts := &CreateStorageIntegrationOptions{
-		OrReplace:   r.OrReplace,
-		IfNotExists: r.IfNotExists,
-		name:        r.name,
-
+		OrReplace:               r.OrReplace,
+		IfNotExists:             r.IfNotExists,
+		name:                    r.name,
 		Enabled:                 r.Enabled,
 		StorageAllowedLocations: r.StorageAllowedLocations,
 		StorageBlockedLocations: r.StorageBlockedLocations,
@@ -97,9 +96,8 @@ func (r *CreateStorageIntegrationRequest) toOpts() *CreateStorageIntegrationOpti
 
 func (r *AlterStorageIntegrationRequest) toOpts() *AlterStorageIntegrationOptions {
 	opts := &AlterStorageIntegrationOptions{
-		IfExists: r.IfExists,
-		name:     r.name,
-
+		IfExists:  r.IfExists,
+		name:      r.name,
 		SetTags:   r.SetTags,
 		UnsetTags: r.UnsetTags,
 	}

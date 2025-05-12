@@ -44,8 +44,8 @@ func (v *rowAccessPolicies) Show(ctx context.Context, request *ShowRowAccessPoli
 
 func (v *rowAccessPolicies) ShowByID(ctx context.Context, id SchemaObjectIdentifier) (*RowAccessPolicy, error) {
 	request := NewShowRowAccessPolicyRequest().
-		WithIn(ExtendedIn{In: In{Schema: id.SchemaId()}}).
-		WithLike(Like{Pattern: String(id.Name())})
+		WithLike(Like{Pattern: String(id.Name())}).
+		WithIn(ExtendedIn{In: In{Schema: id.SchemaId()}})
 	rowAccessPolicies, err := v.Show(ctx, request)
 	if err != nil {
 		return nil, err
@@ -73,14 +73,16 @@ func (r *CreateRowAccessPolicyRequest) toOpts() *CreateRowAccessPolicyOptions {
 		OrReplace:   r.OrReplace,
 		IfNotExists: r.IfNotExists,
 		name:        r.name,
-
-		body:    r.body,
-		Comment: r.Comment,
+		body:        r.body,
+		Comment:     r.Comment,
 	}
 	if r.args != nil {
 		s := make([]CreateRowAccessPolicyArgs, len(r.args))
 		for i, v := range r.args {
-			s[i] = CreateRowAccessPolicyArgs(v)
+			s[i] = CreateRowAccessPolicyArgs{
+				Name: v.Name,
+				Type: v.Type,
+			}
 		}
 		opts.args = s
 	}

@@ -34,8 +34,8 @@ func (v *sequences) Show(ctx context.Context, request *ShowSequenceRequest) ([]S
 
 func (v *sequences) ShowByID(ctx context.Context, id SchemaObjectIdentifier) (*Sequence, error) {
 	request := NewShowSequenceRequest().
-		WithIn(In{Schema: id.SchemaId()}).
-		WithLike(Like{Pattern: String(id.Name())})
+		WithLike(Like{Pattern: String(id.Name())}).
+		WithIn(In{Schema: id.SchemaId()})
 	sequences, err := v.Show(ctx, request)
 	if err != nil {
 		return nil, err
@@ -86,7 +86,6 @@ func (r *AlterSequenceRequest) toOpts() *AlterSequenceOptions {
 		name:         r.name,
 		RenameTo:     r.RenameTo,
 		SetIncrement: r.SetIncrement,
-
 		UnsetComment: r.UnsetComment,
 	}
 	if r.Set != nil {
